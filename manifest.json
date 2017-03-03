@@ -1,5 +1,31 @@
 {
   "manifest_version": 2,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "version": "0.1",
+  "default_locale": "en",
+  "icons": [
+    "img/extension-icon-128x128.png",
+    "img/extension-icon-48x48.png",
+    "img/extension-icon-16x16.png"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "16": "img/extension-icon-16x16.png",
+      "24": "img/extension-icon-24x24.png",
+      "32": "img/extension-icon-32x32.png"
+    },
+    "default_title": "__MSG_extName__"
+  },
+  "author": "__MSG_extAuthor__",
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "offline_enabled": true
+}
+{
+  "manifest_version": 2,
 
   "name": "Bootstrap Tools",
   "description": "Bootstrap columns, greed, breakpoints switcher, viewport size info.",

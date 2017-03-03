@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "Bootstrap Tools",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Bootstrap columns, greed, breakpoints switcher, viewport size info.",
+    "description": "Extension description"
+  },
+  "extAuthor": {
+    "message": "Studio \"Zina design\"",
+    "description": "Extension author"
+  }
+}

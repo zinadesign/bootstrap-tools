@@ -1,3 +1,6 @@
+chrome.browserAction.onClicked.addEventListener(function (tab) {
+
+});
 var on = false;
 hide();
 
