@@ -1,0 +1,63 @@
+.bt-window {
+  font-family: sans-serif;
+  background-color: lightsteelblue;
+  font-size: 16px;
+  padding: 5px 10px;
+  /*line-height: 12px;*/
+  position: fixed;
+  top: 0px;
+  right: 1px;
+  /*text-align: center;*/
+  /*z-index: 999999;*/
+}
+
+.bt-window label {
+  margin-right: 10px;
+}
+
+.bt-version {
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 14px;
+}
+
+.bt-current-prefix {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.bt-window-with {
+  width: 55px;
+  padding: 2px 5px;
+  display: inline-block;
+  margin: 3px 5px 0 5px;
+  font-size: 18px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.bt-breakpoint {
+  margin: 3px;
+  display: inline-block;
+  padding: 3px 10px;
+  text-align: center;
+  vertical-align: middle;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: royalblue;
+}
+.bt-breakpoint:hover {
+  background-color: #18399a;
+}
+.bt-breakpoint:active {
+  background-color: dodgerblue;
+}
+.bt-breakpoint:active:hover {
+  background-color: dodgerblue;
+}
+
+
+
