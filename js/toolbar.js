@@ -36,11 +36,10 @@
 })();
 function get_bootstrap_version() {
     var re = new RegExp('bootstrap.*\.css$')
-    var re_version = new RegExp('Bootstrap v([0-9]+)');
+    var re_version = new RegExp('Bootstrap v([0-9]+)[0-9\.]+');
     return new Promise(function(resolve, reject) {
         var style_elem = document.querySelectorAll('link[rel="stylesheet"]');
         var bootstrap_css_found = false;
-        console.log('get bootstrap version');
         for(var i  = 0; i < style_elem.length; i++) {
             var link = style_elem.item(i);
             console && console.log(link.href);
@@ -87,13 +86,28 @@ function get_sizes(bootstrap_version) {
             {title: 'xs', width: 305}
         ]
     };
-    console.log(bootstrap_version, sizes[bootstrap_version.toString()]);
     return sizes[bootstrap_version.toString()] || [];
+}
+function set_active_class_to_breakpoint(){
+    document.querySelectorAll('.bt-breakpoint').forEach(function(breakpoint){
+        if(parseInt(breakpoint.getAttribute('data-width')) === window.outerWidth)
+        {
+            if(breakpoint.classList.contains('active') === false)
+            {
+                breakpoint.classList.add('active');
+            }
+        }
+        else
+        {
+            breakpoint.classList.remove('active');
+        }
+    });
 }
 function on_window_resize() {
     clearTimeout(resize_timout);
     resize_timout = setTimeout(function () {
         document.getElementById('bToolsWindowWith').value = window.outerWidth;
+        set_active_class_to_breakpoint();
     }, 200);
 }
 function set_window_size(width) {
@@ -108,7 +122,6 @@ function set_window_size(width) {
     });
 }
 function on_change_tools_window_width() {
-    console.log('change input', this.value);
     set_window_size(parseInt(this.value));
 }
 var resize_timout = null;
@@ -134,13 +147,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     });
                     document.getElementById('bToolsWindowWith').addEventListener('change', on_change_tools_window_width);
                     document.getElementById('grid').addEventListener('change', function(){
-
+                        document.querySelector('body').classList.toggle('grid__active');
                     });
+                    document.getElementById('cols').addEventListener('change', function(){
+                        document.querySelector('body').classList.toggle('cols__active');
+                    });
+                    document.getElementById('rows').addEventListener('change', function(){
+                        document.querySelector('body').classList.toggle('rows__active');
+                    });
+                    set_active_class_to_breakpoint();
+
                 }, function(error){
                     console && console.error(error);
                     body.innerHTML += tmpl('bt_toolbar', {bootstrap_version: error, sizes: [], prefix: "", window_width: window.outerWidth, initial_window_width: initial_window_width})
                     window.addEventListener('resize', on_window_resize);
                     document.getElementById('bToolsWindowWith').addEventListener('change', on_change_tools_window_width);
+
                 });
             }
         }

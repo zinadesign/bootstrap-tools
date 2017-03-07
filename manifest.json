@@ -29,8 +29,7 @@
         "css/style.css"
       ],
       "js": [
-        "js/toolbar.js",
-        "js/grid.js"
+        "js/toolbar.js"
       ],
       "matches": ["*://*/*"]
     }
