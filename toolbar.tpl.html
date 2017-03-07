@@ -1,0 +1,33 @@
+<script type="text/html" id="bt_toolbar">
+    <div title="hide" alt="hide" class="bt-window" id="bToolsWindow">
+        <span class="bt-version"><%= bootstrap_version %></span>
+        <label><input type="checkbox" id="grid" /> <%= chrome.i18n.getMessage('Grid') %></label>
+        <label><input type="checkbox" id="rows" /> <%= chrome.i18n.getMessage('Rows') %></label>
+        <label><input type="checkbox" id="cols" /> <%= chrome.i18n.getMessage('Cols') %></label>
+        <% for(var i=0; i < sizes.length; i++) { %>
+            <% size = sizes[i]; %>
+            <button class="bt-breakpoint" data-width="<%= size.width %>"><%= size.title %> (<%= size.width %>)</button>
+        <% } %>
+        <button class="bt-breakpoint" data-width="<%= initial_window_width %>"><%= chrome.i18n.getMessage('initialWidth') %></button>
+        <span class="bt-current-prefix"><%= prefix %></span>
+        <input class="bt-window-with" type="text" id="bToolsWindowWith" value="<%= window_width %>">px</span>
+    </div>
+    <div class="cb-grid-lines">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-1"></div>
+      </div>
+    </div>
+  </div>
+</script>

@@ -58,6 +58,141 @@
 .bt-breakpoint:active:hover {
   background-color: dodgerblue;
 }
+.cols__active .col-xl-1,
+.cols__active .col-xl-2,
+.cols__active .col-xl-3,
+.cols__active .col-xl-4,
+.cols__active .col-xl-5,
+.cols__active .col-xl-6,
+.cols__active .col-xl-7,
+.cols__active .col-xl-8,
+.cols__active .col-xl-9,
+.cols__active .col-xl-10,
+.cols__active .col-xl-11,
+.cols__active .col-xl-12 {
+  border: 1px solid magenta;
+}
+
+.cols__active .col-lg-1,
+.cols__active .col-lg-2,
+.cols__active .col-lg-3,
+.cols__active .col-lg-4,
+.cols__active .col-lg-5,
+.cols__active .col-lg-6,
+.cols__active .col-lg-7,
+.cols__active .col-lg-8,
+.cols__active .col-lg-9,
+.cols__active .col-lg-10,
+.cols__active .col-lg-11,
+.cols__active .col-lg-12 {
+  border: 1px solid red;
+}
+.cols__active .col-md-1,
+.cols__active .col-md-2,
+.cols__active .col-md-3,
+.cols__active .col-md-4,
+.cols__active .col-md-5,
+.cols__active .col-md-6,
+.cols__active .col-md-7,
+.cols__active .col-md-8,
+.cols__active .col-md-9,
+.cols__active .col-md-10,
+.cols__active .col-md-11,
+.cols__active .col-md-12 {
+  border: 1px solid orange;
+}
+.cols__active .col-sm-1,
+.cols__active .col-sm-2,
+.cols__active .col-sm-3,
+.cols__active .col-sm-4,
+.cols__active .col-sm-5,
+.cols__active .col-sm-6,
+.cols__active .col-sm-7,
+.cols__active .col-sm-8,
+.cols__active .col-sm-9,
+.cols__active .col-sm-10,
+.cols__active .col-sm-11,
+.cols__active .col-sm-12 {
+  border: 1px solid lime;
+}
+.cols__active .col-xs-1,
+.cols__active .col-xs-2,
+.cols__active .col-xs-3,
+.cols__active .col-xs-4,
+.cols__active .col-xs-5,
+.cols__active .col-xs-6,
+.cols__active .col-xs-7,
+.cols__active .col-xs-8,
+.cols__active .col-xs-9,
+.cols__active .col-xs-10,
+.cols__active .col-xs-11,
+.cols__active .col-xs-12 {
+  border: 1px solid blue;
+}
+
+.cols__active .cb-grid-lines .col-xs-1 {
+  border: none;
+}
+.grid__active .cb-grid-lines {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.grid__active .cb-grid-lines > * {
+  box-sizing: border-box;
+}
+
+.grid__active .cb-grid-lines .container {
+  height: 100%;
+  position: relative;
+}
+
+.grid__active .cb-grid-lines .container:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: red;
+}
+
+.grid__active .cb-grid-lines .container:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: red;
+}
+
+.grid__active .cb-grid-lines .container .row {
+  height: 100%;
+}
+
+.grid__active .cb-grid-lines .container .row > * {
+  height: 100%;
+  background: rgba(0,0,0,0.2);
+}
+
+.grid__active .cb-grid-lines .container .row > *:before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.2);
+}
+.rows__active .row {
+  border: 1px solid aqua;
+}
+
+
 
 
 

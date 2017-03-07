@@ -10,5 +10,33 @@
   "extAuthor": {
     "message": "Studio \"Zina design\"",
     "description": "Extension author"
+  },
+  "n_a": {
+    "message": "n/a",
+    "description": "Not available"
+  },
+  "Grid": {
+    "message": "Grid",
+    "description": "Bootstrap Grid"
+  },
+  "Rows": {
+    "message": "Rows",
+    "description": "Bootstrap Rows"
+  },
+  "Cols": {
+    "message": "Cols",
+    "description": "Bootstrap Cols"
+  },
+  "errorVersionStringNotFound": {
+    "message": "Boostrap version string in css not found",
+    "description": "Boostrap version string in css not found"
+  },
+  "errorNoBootstrap": {
+    "message": "There is no bootstrap.css on page",
+    "description": "There is no bootstrap.css on page"
+  },
+  "initialWidth": {
+    "message": "Initial width",
+    "description": "Initial browser window width"
   }
 }
