@@ -1,9 +1,13 @@
 <script type="text/html" id="bt_toolbar">
     <div title="hide" alt="hide" class="bt-window" id="bToolsWindow">
-        <span class="bt-version"><%= bootstrap_version %></span>
+        <span class="bt-version"><%= bootstrap_version_string %></span>
+        <button class="bt-version-select btn-primary<% if(bootstrap_version_number == 3) { %> active<% } %>" type="button" data-version="3">bootstrap v3</button>
+        <button class="bt-version-select btn-primary<% if(bootstrap_version_number == 4) { %> active<% } %>" type="button" data-version="4">bootstrap v4</button>
+        <% if(sizes.length > 0) { %>
         <label><input type="checkbox" id="grid" /> <%= chrome.i18n.getMessage('Grid') %></label>
         <label><input type="checkbox" id="rows" /> <%= chrome.i18n.getMessage('Rows') %></label>
         <label><input type="checkbox" id="cols" /> <%= chrome.i18n.getMessage('Cols') %></label>
+        <% } %>
         <% for(var i=0; i < sizes.length; i++) { %>
             <% size = sizes[i]; %>
             <button class="bt-breakpoint btn-primary" type="button" data-width="<%= size.width %>"><%= size.title %></button>

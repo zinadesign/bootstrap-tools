@@ -127,42 +127,56 @@ function on_change_tools_window_width() {
 var resize_timout = null;
 var bootstrap_version = null;
 var initial_window_width = window.outerWidth;
+var body = document.querySelector('body');
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if(request.event == "show_toolbar") {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", chrome.runtime.getURL('toolbar.tpl.html'), true);
+        function add_toolbar_event_handlers () {
+            document.querySelectorAll('.bt-breakpoint').forEach(function(breakpoint){
+               breakpoint.addEventListener('click', function(){
+                   set_window_size(parseInt(this.getAttribute('data-width')));
+               });
+            });
+            document.getElementById('bToolsWindowWith').addEventListener('change', on_change_tools_window_width);
+            document.getElementById('grid') && document.getElementById('grid').addEventListener('change', function(){
+                document.querySelector('body').classList.toggle('grid__active');
+            });
+            document.getElementById('cols') && document.getElementById('cols').addEventListener('change', function(){
+                document.querySelector('body').classList.toggle('cols__active');
+            });
+            document.getElementById('rows') && document.getElementById('rows').addEventListener('change', function(){
+                document.querySelector('body').classList.toggle('rows__active');
+            });
+            document.querySelectorAll('.bt-version-select').forEach(function(version_select){
+                version_select.addEventListener('click', function(){
+                    if(this.getAttribute('data-version') != bootstrap_version) {
+                        bootstrap_version = parseInt(this.getAttribute('data-version'));
+                        document.querySelectorAll('#bToolsWindow').forEach(function(el){
+                            el.parentNode.removeChild(el);
+                        });
+                        body.innerHTML += tmpl('bt_toolbar', {bootstrap_version_string: this.innerText, bootstrap_version_number: bootstrap_version, sizes: get_sizes(bootstrap_version), prefix: "", window_width: window.outerWidth, initial_window_width: initial_window_width})
+                        add_toolbar_event_handlers();
+                    }
+                });
+            });
+            set_active_class_to_breakpoint();
+        }
         xhr.onreadystatechange = function () {
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                var body = document.querySelector('body');
                 body.innerHTML += xhr.responseText;
                 get_bootstrap_version().then(function(result){
                     bootstrap_version = result.version_number;
-                    body.innerHTML += tmpl('bt_toolbar', {bootstrap_version: result.version_string, sizes: get_sizes(result.version_number), prefix: "", window_width: window.outerWidth, initial_window_width: initial_window_width})
+                    body.innerHTML += tmpl('bt_toolbar', {bootstrap_version_string: result.version_string, bootstrap_version_number: result.version_number, sizes: get_sizes(result.version_number), prefix: "", window_width: window.outerWidth, initial_window_width: initial_window_width})
                     window.addEventListener('resize', on_window_resize);
-                    document.querySelectorAll('.bt-breakpoint').forEach(function(breakpoint){
-                       breakpoint.addEventListener('click', function(){
-                           set_window_size(parseInt(this.getAttribute('data-width')));
-                       });
-                    });
-                    document.getElementById('bToolsWindowWith').addEventListener('change', on_change_tools_window_width);
-                    document.getElementById('grid').addEventListener('change', function(){
-                        document.querySelector('body').classList.toggle('grid__active');
-                    });
-                    document.getElementById('cols').addEventListener('change', function(){
-                        document.querySelector('body').classList.toggle('cols__active');
-                    });
-                    document.getElementById('rows').addEventListener('change', function(){
-                        document.querySelector('body').classList.toggle('rows__active');
-                    });
-                    set_active_class_to_breakpoint();
-
+                    add_toolbar_event_handlers();
                 }, function(error){
                     console && console.error(error);
-                    body.innerHTML += tmpl('bt_toolbar', {bootstrap_version: error, sizes: [], prefix: "", window_width: window.outerWidth, initial_window_width: initial_window_width})
+                    body.innerHTML += tmpl('bt_toolbar', {bootstrap_version_string: error, bootstrap_version_number: 0, sizes: [], prefix: "", window_width: window.outerWidth, initial_window_width: initial_window_width})
                     window.addEventListener('resize', on_window_resize);
-                    document.getElementById('bToolsWindowWith').addEventListener('change', on_change_tools_window_width);
-
+                    // document.getElementById('bToolsWindowWith').addEventListener('change', on_change_tools_window_width);
+                    add_toolbar_event_handlers();
                 });
             }
         }
