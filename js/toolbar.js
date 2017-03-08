@@ -143,6 +143,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             document.getElementById('grid') && document.getElementById('grid').addEventListener('change', function(){
                 document.querySelector('body').classList.toggle('grid__active');
             });
+            document.getElementById('containers') && document.getElementById('containers').addEventListener('change', function(){
+                document.querySelector('body').classList.toggle('containers__active');
+            });
             document.getElementById('cols') && document.getElementById('cols').addEventListener('change', function(){
                 document.querySelector('body').classList.toggle('cols__active');
             });

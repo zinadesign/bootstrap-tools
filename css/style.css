@@ -1,3 +1,5 @@
+/* Interface */
+
 .bt-window {
   font-family: sans-serif;
   background-color: lightsteelblue;
@@ -58,81 +60,32 @@
 .bt-breakpoint:active:hover {
   background-color: dodgerblue;
 }
-.cols__active .col-xl-1,
-.cols__active .col-xl-2,
-.cols__active .col-xl-3,
-.cols__active .col-xl-4,
-.cols__active .col-xl-5,
-.cols__active .col-xl-6,
-.cols__active .col-xl-7,
-.cols__active .col-xl-8,
-.cols__active .col-xl-9,
-.cols__active .col-xl-10,
-.cols__active .col-xl-11,
-.cols__active .col-xl-12 {
-  border: 1px solid magenta;
+
+/* Page injections */
+
+/* Containers highlights */
+
+.containers__active .container {
+  background-color: #ede2ff;
+  border: 3px dashed #563e7d;
 }
 
-.cols__active .col-lg-1,
-.cols__active .col-lg-2,
-.cols__active .col-lg-3,
-.cols__active .col-lg-4,
-.cols__active .col-lg-5,
-.cols__active .col-lg-6,
-.cols__active .col-lg-7,
-.cols__active .col-lg-8,
-.cols__active .col-lg-9,
-.cols__active .col-lg-10,
-.cols__active .col-lg-11,
-.cols__active .col-lg-12 {
-  border: 1px solid red;
-}
-.cols__active .col-md-1,
-.cols__active .col-md-2,
-.cols__active .col-md-3,
-.cols__active .col-md-4,
-.cols__active .col-md-5,
-.cols__active .col-md-6,
-.cols__active .col-md-7,
-.cols__active .col-md-8,
-.cols__active .col-md-9,
-.cols__active .col-md-10,
-.cols__active .col-md-11,
-.cols__active .col-md-12 {
-  border: 1px solid orange;
-}
-.cols__active .col-sm-1,
-.cols__active .col-sm-2,
-.cols__active .col-sm-3,
-.cols__active .col-sm-4,
-.cols__active .col-sm-5,
-.cols__active .col-sm-6,
-.cols__active .col-sm-7,
-.cols__active .col-sm-8,
-.cols__active .col-sm-9,
-.cols__active .col-sm-10,
-.cols__active .col-sm-11,
-.cols__active .col-sm-12 {
-  border: 1px solid lime;
-}
-.cols__active .col-xs-1,
-.cols__active .col-xs-2,
-.cols__active .col-xs-3,
-.cols__active .col-xs-4,
-.cols__active .col-xs-5,
-.cols__active .col-xs-6,
-.cols__active .col-xs-7,
-.cols__active .col-xs-8,
-.cols__active .col-xs-9,
-.cols__active .col-xs-10,
-.cols__active .col-xs-11,
-.cols__active .col-xs-12 {
-  border: 1px solid blue;
+/* Rows highlights */
+
+.rows__active .row {
+  background-color: #f8f3ed;
+  border: 2px dashed tan;
 }
 
-.cols__active .cb-grid-lines .col-xs-1 {
-  border: none;
+/* Cols highlights */
+
+.cols__active [class*=' col'] {
+  background-color: #e6ffff;
+  border: 1px dashed aqua;
 }
+
+/* Grid highlights */
+
 .grid__active .cb-grid-lines {
   height: 100%;
   width: 100%;
@@ -176,6 +129,12 @@
   height: 100%;
 }
 
+.rows__active .cb-grid-lines .container .row,
+.containers__active .cb-grid-lines .container {
+  background-color: transparent;
+  border: transparent;
+}
+
 .grid__active .cb-grid-lines .container .row > * {
   height: 100%;
   background: rgba(0,0,0,0.2);
@@ -188,11 +147,3 @@
   width: 100%;
   background: rgba(0,0,0,0.2);
 }
-.rows__active .row {
-  border: 1px solid aqua;
-}
-
-
-
-
-
