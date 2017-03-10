@@ -73,17 +73,17 @@ function get_bootstrap_version() {
 function get_sizes(bootstrap_version) {
     var sizes = {
         '3': [
-            {title: 'lg', width: 1200},
-            {title: 'md', width: 992},
+            {title: 'xs', width: 305},
             {title: 'sm', width: 768},
-            {title: 'xs', width: 305}
+            {title: 'md', width: 992},
+            {title: 'lg', width: 1200}
         ],
         '4': [
-            {title: 'xl', width: 1200},
-            {title: 'lg', width: 992},
-            {title: 'md', width: 768},
+            {title: 'xs', width: 305},
             {title: 'sm', width: 544},
-            {title: 'xs', width: 305}
+            {title: 'md', width: 768},
+            {title: 'lg', width: 992},
+            {title: 'xl', width: 1200}
         ]
     };
     return sizes[bootstrap_version.toString()] || [];
