@@ -35,38 +35,62 @@
     };
 })();
 function get_bootstrap_version() {
-    var re = new RegExp('bootstrap.*\.css$')
+    var re = new RegExp('(bootstrap.*\.css|style.*\.css|main.*\.css).*$');
     var re_version = new RegExp('Bootstrap v([0-9]+)[0-9\.]+');
     return new Promise(function(resolve, reject) {
         var style_elem = document.querySelectorAll('link[rel="stylesheet"]');
-        var bootstrap_css_found = false;
+        var promises = [];
         for(var i  = 0; i < style_elem.length; i++) {
             var link = style_elem.item(i);
-            console && console.log(link.href);
             if(re.test(link.href)) {
-                bootstrap_css_found = true;
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", link.href, true);
-                xhr.onreadystatechange = function () {
-                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                        try {
-                            var version_string = xhr.responseText.split('\n')[1];
-                            console && console.log(version_string);
-                            var matches = version_string.match(re_version);
-                            resolve({version_string: matches[0], version_number: parseInt(matches[1])});
-                        }
-                        catch(e) {
-                            reject(chrome.i18n.getMessage("errorVersionStringNotFound"));
-                        }
-                    }
-                };
-                xhr.send();
-                break;
+                (function(link){
+                    promises.push(
+                        new Promise(function(resolve, reject) {
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("GET", link.href, true);
+                            xhr.onreadystatechange = function () {
+                                if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                                    var css_file = xhr.responseText.split('\n');
+
+                                    for(var j = 0; j < css_file.length; j++)
+                                    {
+                                        var matches = css_file[j].match(re_version);
+                                        if(matches && matches.length == 2)
+                                        {
+                                            console && console.log(css_file[j]);
+                                            return resolve({version_string: matches[0], version_number: parseInt(matches[1])});
+                                        }
+                                    }
+                                    resolve(undefined);
+                                    // reject(chrome.i18n.getMessage('errorVersionStringNotFound')+link.href);
+                                }
+                                if(xhr.readyState == XMLHttpRequest.DONE) {
+                                    reject('request error', xhr.status);
+                                }
+
+                            };
+                            xhr.send();
+                        })
+                    );
+                })(link);
             }
         }
-        if(bootstrap_css_found === false)
-        {
+        if(promises.length === 0) {
             reject(chrome.i18n.getMessage("errorNoBootstrap"));
+        }
+        else {
+            Promise.all(promises).then(function (res) {
+                res.some(function(v){
+                    if(typeof v != "undefined")
+                    {
+                        resolve(res[0]);
+                        return true;
+                    }
+                });
+                reject(chrome.i18n.getMessage('errorVersionStringNotFound'));
+            }, function(err){
+                reject(err);
+            });
         }
     });
 }
