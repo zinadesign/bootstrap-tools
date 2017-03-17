@@ -36,7 +36,7 @@
 })();
 function get_bootstrap_version() {
     var re = new RegExp('(bootstrap.*\.css|style.*\.css|main.*\.css).*$');
-    var re_version = new RegExp('Bootstrap v([0-9]+)[0-9\.]+');
+    var re_version = new RegExp('Bootstrap v([0-9]+)[0-9a-zA-Z\.\-]+');
     return new Promise(function(resolve, reject) {
         var style_elem = document.querySelectorAll('link[rel="stylesheet"]');
         var promises = [];
@@ -58,11 +58,15 @@ function get_bootstrap_version() {
                                         if(matches && matches.length == 2)
                                         {
                                             console && console.log(css_file[j]);
-                                            return resolve({version_string: matches[0], version_number: parseInt(matches[1])});
+                                            return resolve({
+                                                version_string: matches[0],
+                                                version_string_short: 'Bootstrap v'+parseInt(matches[1]),
+                                                version_string_shortest: 'B'+parseInt(matches[1]),
+                                                version_number: parseInt(matches[1])
+                                            });
                                         }
                                     }
                                     resolve(undefined);
-                                    // reject(chrome.i18n.getMessage('errorVersionStringNotFound')+link.href);
                                 }
                                 if(xhr.readyState == XMLHttpRequest.DONE) {
                                     reject('request error', xhr.status);
@@ -153,8 +157,16 @@ var bootstrap_version = null;
 var initial_window_width = window.outerWidth;
 var body = document.querySelector('body');
 
+var detected_bootstrap_version = {
+    version_string: '',
+    version_string_short: '',
+    version_string_shortest: '',
+    version_number: 0,
+};
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if(request.event == "show_toolbar") {
+        console && console.log(request.event);
         var xhr = new XMLHttpRequest();
         xhr.open("GET", chrome.runtime.getURL('toolbar.tpl.html'), true);
         function add_toolbar_event_handlers () {
@@ -183,7 +195,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         document.querySelectorAll('#bToolsWindow').forEach(function(el){
                             el.parentNode.removeChild(el);
                         });
+                        document.querySelectorAll('.cb-grid-lines').forEach(function (el) {
+                            el.parentNode.removeChild(el);
+                        });
+                        document.querySelector('body').classList.remove('grid__active');
+                        document.querySelector('body').classList.remove('containers__active');
+                        document.querySelector('body').classList.remove('cols__active');
+                        document.querySelector('body').classList.remove('rows__active');
                         body.innerHTML += tmpl('bt_toolbar', {
+                            detected_bootstrap_version: detected_bootstrap_version,
                             bootstrap_version_string: this.innerText,
                             bootstrap_version_number: bootstrap_version,
                             sizes: get_sizes(bootstrap_version),
@@ -202,8 +222,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                 body.innerHTML += xhr.responseText;
                 get_bootstrap_version().then(function(result){
+                    detected_bootstrap_version = result;
                     bootstrap_version = result.version_number;
                     body.innerHTML += tmpl('bt_toolbar', {
+                        detected_bootstrap_version: detected_bootstrap_version,
                         bootstrap_version_string: result.version_string,
                         bootstrap_version_number: result.version_number,
                         sizes: get_sizes(result.version_number),
@@ -216,7 +238,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     add_toolbar_event_handlers();
                 }, function(error){
                     console && console.error(error);
+                    detected_bootstrap_version = {
+                        version_string: error,
+                        version_string_short: error,
+                        version_string_shortest: error,
+                        version_number: 0,
+                    }
                     body.innerHTML += tmpl('bt_toolbar', {
+                        detected_bootstrap_version: detected_bootstrap_version,
                         bootstrap_version_string: error,
                         bootstrap_version_number: 0,
                         sizes: [],
@@ -232,14 +261,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }
         }
         xhr.send();
-    }
-    else if(request.event == "hide_toolbar") {
+    }  else if(request.event == "hide_toolbar") {
+        console && console.log(request.event);
         document.querySelectorAll('#bt_toolbar').forEach(function(el){
             el.parentNode.removeChild(el);
         });
         document.querySelectorAll('#bToolsWindow').forEach(function(el){
             el.parentNode.removeChild(el);
         });
+        document.querySelectorAll('.cb-grid-lines').forEach(function (el) {
+            el.parentNode.removeChild(el);
+        });
+        document.querySelector('body').classList.remove('grid__active');
+        document.querySelector('body').classList.remove('containers__active');
+        document.querySelector('body').classList.remove('cols__active');
+        document.querySelector('body').classList.remove('rows__active');
         window.removeEventListener('resize', on_window_resize);
+
     }
 });

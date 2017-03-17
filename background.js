@@ -1,17 +1,29 @@
-var browserActionIsActive = false;
-chrome.tabs.executeScript(null,  {file: "js/toolbar.js"});
+var browserActionIsActive = {};
+try {
+    chrome.tabs.executeScript(null,  {file: "js/toolbar.js"});
+} catch (e) {
+    console && console.error(e);
+}
+
 chrome.browserAction.onClicked.addListener(function (tab) {
-  browserActionIsActive = !browserActionIsActive;
-  (function(browserActionIsActive){
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        if(browserActionIsActive) {
-          chrome.tabs.sendMessage(tabs[0].id, {event: "show_toolbar"});
-        }
-        else  {
-          chrome.tabs.sendMessage(tabs[0].id, {event: "hide_toolbar"});
-        }
-    });
-  })(browserActionIsActive);
+   browserActionIsActive[tab.id] = !browserActionIsActive[tab.id];
+  if(browserActionIsActive[tab.id]) {
+      chrome.tabs.sendMessage(tab.id, {event: "show_toolbar"});
+  }  else  {
+      chrome.tabs.sendMessage(tab.id, {event: "hide_toolbar"});
+  }
+});
+chrome.tabs.onUpdated.addListener(function (tabid, changeInfo, tab) {
+    if(changeInfo.status == "complete" && typeof browserActionIsActive[tabid] != "undefined")
+    {
+        delete browserActionIsActive[tabid];
+    }
+});
+chrome.tabs.onRemoved.addListener(function(tab) {
+    if(typeof browserActionIsActive[tab.id] != "undefined")
+    {
+        delete browserActionIsActive[tabid];
+    }
 });
 function _getLastFocused(callback) {
     chrome.tabs.query({

@@ -1,6 +1,8 @@
 <script type="text/html" id="bt_toolbar">
     <div title="hide" alt="hide" class="bt-window" id="bToolsWindow">
-        <span class="bt-version"><%= bootstrap_version_string %></span>
+        <span class="bt-version">
+            <%= detected_bootstrap_version.version_string %>
+        </span>
         <button class="bt-version-select btn-primary<% if(bootstrap_version_number == 3) { %> active<% } %>" type="button" data-version="3" title="Bootstrap v3">B3</button>
         <button class="bt-version-select btn-primary<% if(bootstrap_version_number == 4) { %> active<% } %>" type="button" data-version="4" title="Bootstrap v4">B4</button>
         <% if(sizes.length > 0) { %>
@@ -17,21 +19,21 @@
         <input class="bt-window-with" type="text" id="bToolsWindowWith" value="<%= window_width %>">px</span>
     </div>
     <div class="cb-grid-lines">
-    <div class="container">
-      <div class="row">
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-        <div class="<%= col_class %>"></div>
-      </div>
-    </div>
+        <div class="container">
+          <div class="row">
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+            <div class="<%= col_class %>"></div>
+          </div>
+        </div>
   </div>
 </script>
