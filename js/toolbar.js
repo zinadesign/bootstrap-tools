@@ -87,7 +87,7 @@ function get_bootstrap_version() {
                 res.some(function(v){
                     if(typeof v != "undefined")
                     {
-                        resolve(res[0]);
+                        resolve(v);
                         return true;
                     }
                 });
