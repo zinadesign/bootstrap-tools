@@ -10,7 +10,7 @@
   top: 0px;
   right: 1px;
   /*text-align: center;*/
-  z-index: 999;
+  z-index: 9999;
 }
 
 .bt-window label {
@@ -93,7 +93,7 @@
   left: 0;
   position: fixed;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9998;
 }
 
 .grid__active .cb-grid-lines > * {
