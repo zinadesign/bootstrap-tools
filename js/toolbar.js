@@ -207,7 +207,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                             bootstrap_version_string: this.innerText,
                             bootstrap_version_number: bootstrap_version,
                             sizes: get_sizes(bootstrap_version),
-                            prefix: "",
                             window_width: window.outerWidth,
                             col_class: bootstrap_version < 4?'col-xs-1':'col',
                             initial_window_width: initial_window_width
@@ -229,7 +228,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         bootstrap_version_string: result.version_string,
                         bootstrap_version_number: result.version_number,
                         sizes: get_sizes(result.version_number),
-                        prefix: "",
                         window_width: window.outerWidth,
                         col_class: result.version_number < 4?'col-xs-1':'col',
                         initial_window_width: initial_window_width
@@ -249,7 +247,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         bootstrap_version_string: error,
                         bootstrap_version_number: 0,
                         sizes: [],
-                        prefix: "",
                         window_width: window.outerWidth,
                         col_class: 'col',
                         initial_window_width: initial_window_width
