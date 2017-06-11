@@ -13,14 +13,34 @@
   z-index: 9999;
 }
 
+.containers,
+.cols,
+.rows {
+  display: none;
+}
+
+@media (min-width: 930px) {
+  .containers,
+  .cols,
+  .rows {
+    display: inline-block;
+  }
+}
+
 .bt-window label {
   margin-right: 10px;
 }
 
 .bt-version {
-  display: inline-block;
-  margin-right: 15px;
-  font-size: 14px;
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .bt-version {
+    display: inline-block;
+    margin-right: 15px;
+    font-size: 14px;
+  }
 }
 
 .bt-window-with {
