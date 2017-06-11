@@ -1,5 +1,10 @@
 /* Interface */
 
+.bootstrap-tools-placeholder {
+  display: block;
+  height: 50px;
+}
+
 .bt-window {
   font-family: sans-serif;
   background-color: lightsteelblue;
