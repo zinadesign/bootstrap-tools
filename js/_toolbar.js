@@ -188,28 +188,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                });
             });
             document.getElementById('bToolsWindowWith').addEventListener('change', on_change_tools_window_width);
-            document.querySelectorAll('#grid').forEach(function (el) {
-                el.addEventListener('change', function(){
-                    document.querySelector('body').classList.toggle('grid__active');
-                });
+            document.getElementById('grid') && document.getElementById('grid').addEventListener('change', function(){
+                document.querySelector('body').classList.toggle('grid__active');
             });
-            document.querySelectorAll('#containers').forEach(function(el){
-                el.addEventListener('change', function(){
-                    document.querySelector('body').classList.toggle('containers__active');
-                });
+            document.getElementById('containers') && document.getElementById('containers').addEventListener('change', function(){
+                document.querySelector('body').classList.toggle('containers__active');
             });
-            document.querySelectorAll('#cols').forEach(function(el){
-                el.addEventListener('change', function(){
-                    document.querySelector('body').classList.toggle('cols__active');
-                });
+            document.getElementById('cols') && document.getElementById('cols').addEventListener('change', function(){
+                document.querySelector('body').classList.toggle('cols__active');
             });
-            document.querySelectorAll('#rows').forEach(function(el) {
-                el.addEventListener('change', function(){
-                    document.querySelector('body').classList.toggle('rows__active');
-                });
+            document.getElementById('rows') && document.getElementById('rows').addEventListener('change', function(){
+                document.querySelector('body').classList.toggle('rows__active');
             });
             document.querySelectorAll('.bt-version-select').forEach(function(version_select){
+                console.log(version_select);
                 version_select.addEventListener('click', function(){
+                    console.log('click');
                     if(this.getAttribute('data-version') != bootstrap_version) {
                         bootstrap_version = parseInt(this.getAttribute('data-version'));
                         document.querySelectorAll('#bToolsWindow').forEach(function(el){
@@ -222,7 +216,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         document.querySelector('body').classList.remove('containers__active');
                         document.querySelector('body').classList.remove('cols__active');
                         document.querySelector('body').classList.remove('rows__active');
-                        body.insertAdjacentHTML('afterbegin', tmpl('bt_toolbar', {
+                        body.innerHTML += tmpl('bt_toolbar', {
                             detected_bootstrap_version: detected_bootstrap_version,
                             bootstrap_version_string: this.innerText,
                             bootstrap_version_number: bootstrap_version,
@@ -230,7 +224,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                             window_width: window.outerWidth,
                             col_class: bootstrap_version < 4?'col-xs-1':'col',
                             initial_window_width: initial_window_width
-                        }));
+                        });
                         add_toolbar_event_handlers();
                     }
                 });
@@ -239,11 +233,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }
         xhr.onreadystatechange = function () {
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                body.insertAdjacentHTML('afterbegin', xhr.responseText);
+                body.innerHTML += xhr.responseText;
                 get_bootstrap_version().then(function(result){
                     detected_bootstrap_version = result;
                     bootstrap_version = result.version_number;
-                    body.insertAdjacentHTML('afterbegin', tmpl('bt_toolbar', {
+                    body.innerHTML += tmpl('bt_toolbar', {
                         detected_bootstrap_version: detected_bootstrap_version,
                         bootstrap_version_string: result.version_string,
                         bootstrap_version_number: result.version_number,
@@ -251,11 +245,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         window_width: window.outerWidth,
                         col_class: result.version_number < 4?'col-xs-1':'col',
                         initial_window_width: initial_window_width
-                    }));
+                    });
                     window.addEventListener('resize', on_window_resize);
                     add_toolbar_event_handlers();
                     body.classList.add('bootstrap-tools_active');
-                    body.insertAdjacentHTML('beforeend','<div class="bootstrap-tools-placeholder"></div>');
+                    body.innerHTML = '<div class="bootstrap-tools-placeholder"></div>'+body.innerHTML;
                 }, function(error){
                     console && console.error(error);
                     detected_bootstrap_version = {
@@ -264,7 +258,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         version_string_shortest: error,
                         version_number: 0,
                     }
-                    body.insertAdjacentHTML('afterbegin',tmpl('bt_toolbar', {
+                    body.innerHTML += tmpl('bt_toolbar', {
                         detected_bootstrap_version: detected_bootstrap_version,
                         bootstrap_version_string: error,
                         bootstrap_version_number: 0,
@@ -272,12 +266,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         window_width: window.outerWidth,
                         col_class: 'col',
                         initial_window_width: initial_window_width
-                    }));
+                    })
                     window.addEventListener('resize', on_window_resize);
                     // document.getElementById('bToolsWindowWith').addEventListener('change', on_change_tools_window_width);
                     add_toolbar_event_handlers();
                     body.classList.add('bootstrap-tools_active');
-                    body.insertAdjacentHTML('beforeend','<div class="bootstrap-tools-placeholder"></div>')
+                    body.innerHTML = '<div class="bootstrap-tools-placeholder"></div>'+body.innerHTML;
                 });
             }
         }
@@ -297,10 +291,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         document.querySelector('body').classList.remove('containers__active');
         document.querySelector('body').classList.remove('cols__active');
         document.querySelector('body').classList.remove('rows__active');
-        var placeholder = document.querySelector('.bootstrap-tools-placeholder');
-        if(placeholder) {
-            placeholder.remove();
-        }
+        document.querySelector('.bootstrap-tools-placeholder').remove();
         body.classList.remove('boostrap-tools_active');
         window.removeEventListener('resize', on_window_resize);
 
